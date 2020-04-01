@@ -15,7 +15,7 @@ export default function TitleList({ topLevelIds, pages }) {
 function TitleItem({ page, pages }) {
   const [collapsed, setCollapsed] = useState(true);
 
-  function toggleCollapsed(e) {
+  function toggleCollapsed() {
     setCollapsed(prev => !prev);
   }
 
@@ -29,7 +29,17 @@ function TitleItem({ page, pages }) {
       }}
     >
       <div className="TitleList__header" onClick={toggleCollapsed}>
-        {page.pages && <div className="TitleList__CheckSqure"></div>}
+        {page.pages &&
+          (collapsed ? (
+            <div
+              style={{
+                transform: "rotate(-90deg)"
+              }}
+              className="TitleList__CheckSqure"
+            ></div>
+          ) : (
+            <div className="TitleList__CheckSqure"></div>
+          ))}
         {page.title}
       </div>
       {!collapsed && page.pages && (
