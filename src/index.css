@@ -28,20 +28,21 @@ code {
 .TitleList__CheckSqure {
   width: 10px;
   height: 10px;
-  background-color: brown;
+  background-image: url("./arrow black.svg");
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+  background-position: center;
+  margin: 5px;
 }
 
 .TitleList__header {
   display: flex;
   align-items: center;
+  margin: 10px;
 }
 
 .TitleList__item {
   cursor: pointer;
-}
-
-.TitleList__item:focus {
-  font-weight: bolder;
 }
 
 .TitleList__item:hover {
