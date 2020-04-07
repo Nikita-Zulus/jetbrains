@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 
-export default function TitleList({ topLevelIds, pages }) {
+export default function TitleList({ topLevelIds, pages, anchors }) {
   return (
     <ul className="TitleList">
       {topLevelIds
         .map(id => pages[id])
         .map(page => (
-          <TitleItem page={page} pages={pages} />
+          <TitleItem page={page} pages={pages} anchors={anchors} />
         ))}
     </ul>
   );
 }
 
-function TitleItem({ page, pages }) {
+function TitleItem({ page, pages, anchors }) {
   const [collapsed, setCollapsed] = useState(true);
 
   function toggleCollapsed() {
@@ -20,30 +20,59 @@ function TitleItem({ page, pages }) {
   }
 
   return (
-    <li
-      key={page.id}
-      id={page.id}
-      className="TitleList__item"
-      style={{
-        paddingLeft: `${page.level * 10}px`
-      }}
-    >
-      <div className="TitleList__header" onClick={toggleCollapsed}>
-        {page.pages &&
-          (collapsed ? (
+    <li key={page.id} id={page.id} className="TitleList__item">
+      <div
+        className="TitleAndAnchor"
+        style={
+          !collapsed
+            ? { backgroundColor: "#f0f0f0" }
+            : { backgroundColor: "#fafafa" }
+        }
+        onClick={toggleCollapsed}
+      >
+        <div className="TitleList__header">
+          {page.pages && (
             <div
-              style={{
-                transform: "rotate(-90deg)"
-              }}
-              className="TitleList__CheckSqure"
+              className={
+                collapsed
+                  ? "TitleList__CheckSqure__Rotate"
+                  : "TitleList__CheckSqure"
+              }
             ></div>
-          ) : (
-            <div className="TitleList__CheckSqure"></div>
-          ))}
-        {page.title}
+          )}
+          <div
+            className="TitleOnly"
+            style={
+              page.pages === undefined
+                ? { marginLeft: "15px" }
+                : { marginLeft: "0px" }
+            }
+          >
+            <div
+              style={
+                !collapsed ? { fontWeight: "bold" } : { fontWeight: "normal" }
+              }
+            >
+              {page.title}
+            </div>
+          </div>
+        </div>
+        <div className="anchors">
+          {!collapsed &&
+            page.anchors &&
+            page.anchors.map(anchor => (
+              <a
+                href={page.href + anchor}
+                className="Anchor"
+                style={{ paddingLeft: "15px" }}
+              >
+                {anchors[anchor].title}
+              </a>
+            ))}
+        </div>
       </div>
       {!collapsed && page.pages && (
-        <TitleList pages={pages} topLevelIds={page.pages} />
+        <TitleList pages={pages} topLevelIds={page.pages} anchors={anchors} />
       )}
     </li>
   );
