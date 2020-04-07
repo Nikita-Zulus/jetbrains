@@ -5,7 +5,7 @@ const json = require("./HelpTOC.json");
 
 const {
   topLevelIds,
-  entities: { pages }
+  entities: { pages, anchors }
 } = json;
 
 // const topLevelIds = json.topLevelIds;
@@ -18,7 +18,7 @@ function App() {
   return (
     <div>
       <div className="menu">
-        <TitleList pages={pages} topLevelIds={topLevelIds} />
+        <TitleList pages={pages} topLevelIds={topLevelIds} anchors={anchors} />
       </div>
     </div>
   );

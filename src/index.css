@@ -17,10 +17,14 @@ code {
 
 .menu {
   display: flex;
-  border: 1px solid black;
-  width: 50%;
-}
 
+  width: max-content;
+
+  background-color: #fafafa;
+}
+.TitleAndAnchor {
+  padding-right: 10px;
+}
 .TitleList {
   list-style: none;
 }
@@ -32,19 +36,44 @@ code {
   background-repeat: no-repeat;
   transform: rotate(90deg);
   background-position: center;
-  margin: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
 }
-
+.TitleList__CheckSqure__Rotate {
+  width: 10px;
+  height: 10px;
+  background-image: url("./arrow black.svg");
+  background-repeat: no-repeat;
+  transform: rotate(-90deg);
+  background-position: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
 .TitleList__header {
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.Anchor {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: black;
 }
 
 .TitleList__item {
   cursor: pointer;
 }
 
-.TitleList__item:hover {
+.anchors {
+  display: flex;
+  flex-direction: column;
+}
+
+/* .TitleList__item:hover {
   background-color: rgb(158, 151, 151);
 }
+ */
