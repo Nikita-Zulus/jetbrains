@@ -15,6 +15,7 @@ export default function TitleList({ topLevelIds, pages, anchors }) {
 function TitleItem({ page, pages, anchors }) {
   const [collapsed, setCollapsed] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
+
   console.log(selectedId);
   function toggleCollapsed() {
     setCollapsed((prev) => !prev);
@@ -25,7 +26,7 @@ function TitleItem({ page, pages, anchors }) {
       <div
         className="TitleAndAnchor"
         style={
-          !collapsed || page.id === selectedId
+          page.id === selectedId
             ? { backgroundColor: "#f0f0f0" }
             : { backgroundColor: "#fafafa" }
         }
@@ -33,7 +34,7 @@ function TitleItem({ page, pages, anchors }) {
         onMouseOver={() => setSelectedId(page.id)}
         onMouseOut={() => setSelectedId(null)}
       >
-        <div className="TitleList__header">
+        <div className="TitleList__header" tabindex="0">
           {page.pages && (
             <div
               className={
@@ -51,13 +52,7 @@ function TitleItem({ page, pages, anchors }) {
                 : { marginLeft: "0px" }
             }
           >
-            <div
-              style={
-                !collapsed ? { fontWeight: "bold" } : { fontWeight: "normal" }
-              }
-            >
-              {page.title}
-            </div>
+            {page.title}
           </div>
         </div>
         <div className="anchors">
