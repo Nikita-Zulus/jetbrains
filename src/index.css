@@ -17,16 +17,13 @@ code {
 
 .menu {
   display: flex;
-
   width: max-content;
-
   background-color: #fafafa;
 }
-.TitleAndAnchor {
-  padding-right: 10px;
-}
+
 .TitleList {
   list-style: none;
+  padding-left: 0;
 }
 
 .TitleList__CheckSqure {
@@ -58,6 +55,7 @@ code {
   margin-bottom: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
+  padding-left: 10px;
 }
 .Anchor {
   margin-top: 10px;
@@ -65,7 +63,10 @@ code {
   text-decoration: none;
   color: black;
 }
-
+.TitleAndAnchor {
+  display: flex;
+  flex-direction: column;
+}
 .TitleList__item {
   cursor: pointer;
 }
@@ -74,11 +75,23 @@ code {
   display: flex;
   flex-direction: column;
 }
-.TitleList__header:focus {
+
+.TitleOnly {
+  color: black;
+  text-decoration: none;
+}
+/* .TitleOnly:focus {
   font-weight: bold;
   outline: none;
+} */
+.TitleOnlyBold {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
 }
-/* .TitleList__item:hover {
-  background-color: rgb(158, 151, 151);
+.name {
+  height: 20px;
 }
- */
+.wrap {
+  display: flex;
+}
