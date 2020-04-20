@@ -100,6 +100,6 @@ code {
 .wrap {
   display: flex;
 }
-/* .searchButton {
+.searchButton {
   height: 20px;
-} */
+}

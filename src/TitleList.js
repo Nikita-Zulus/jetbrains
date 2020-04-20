@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
-export default function TitleList({ topLevelIds, pages, anchors, name }) {
+export default function TitleList({
+  topLevelIds,
+  pages,
+  anchors,
+  name,
+  fontMenu,
+}) {
   const [font, setFont] = useState(null);
   function fontHandle(y) {
     if (y.target.className === "Anchor" || y.target.className === "anchors") {
@@ -37,6 +43,7 @@ export default function TitleList({ topLevelIds, pages, anchors, name }) {
                 anchors={anchors}
                 name={name}
                 font={font}
+                fontMenu={fontMenu}
               />
             ))
         : entirePages.map((page) => (
@@ -46,13 +53,14 @@ export default function TitleList({ topLevelIds, pages, anchors, name }) {
               anchors={anchors}
               /*  name={name} */
               font={font}
+              fontMenu={fontMenu}
             />
           ))}
     </ul>
   );
 }
 
-function TitleItem({ page, pages, anchors, name, font }) {
+function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
   const [collapsed, setCollapsed] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
   const [slectedTarget, setSelectedTarget] = useState(null);
@@ -61,13 +69,17 @@ function TitleItem({ page, pages, anchors, name, font }) {
   function toggleCollapsed(event) {
     if (event.target === slectedTarget) {
       return;
+    } else {
+      setCollapsed((prev) => !prev);
     }
-    setCollapsed((prev) => !prev);
   }
   /* function handleColor(x) {
     setColored(x);
   } */
   function handleWeight(x) {
+    if (x.target.className === "Anchor" || x.target.className === "anchors") {
+      setFontCompare((prev) => prev);
+    }
     setFontCompare(x.target);
   }
   return (
@@ -108,7 +120,11 @@ function TitleItem({ page, pages, anchors, name, font }) {
                   : "TitleOnly"
               } */
               /* className="TitleOnly" */
-              className={font === fontCompare ? "TitleOnlyBold" : "TitleOnly"}
+              className={
+                font === fontCompare && fontCompare === fontMenu
+                  ? "TitleOnlyBold"
+                  : "TitleOnly"
+              }
               style={
                 page.pages === undefined
                   ? { marginLeft: "15.5px" }
@@ -144,6 +160,8 @@ function TitleItem({ page, pages, anchors, name, font }) {
             topLevelIds={page.pages}
             anchors={anchors}
             name={name}
+            font={font}
+            fontMenu={fontMenu}
           />
         )}
       </li>
