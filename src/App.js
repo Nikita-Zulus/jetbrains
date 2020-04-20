@@ -14,6 +14,7 @@ const {
 /* console.log(topLevelIds, pages); */
 
 function App() {
+  /* function handleSearch() {} */
   // return 123;
   const [name, setName] = useState("");
   return (
@@ -33,6 +34,9 @@ function App() {
         onChange={(e) => setName(e.target.value)}
         value={name}
       />
+      {/* <button type="button" className="searchButton" onClick={handleSearch}>
+        Найти
+      </button> */}
     </div>
   );
 }

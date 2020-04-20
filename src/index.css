@@ -53,9 +53,10 @@ code {
   align-items: center;
   margin-top: 5px;
   margin-bottom: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  /* padding-top: 5px;
+  padding-bottom: 5px; */
   padding-left: 10px;
+  line-height: 35px;
 }
 .Anchor {
   margin-top: 10px;
@@ -79,6 +80,8 @@ code {
 .TitleOnly {
   color: black;
   text-decoration: none;
+  display: flex;
+  flex-grow: 1;
 }
 /* .TitleOnly:focus {
   font-weight: bold;
@@ -88,6 +91,8 @@ code {
   font-weight: bold;
   color: black;
   text-decoration: none;
+  display: flex;
+  flex-grow: 1;
 }
 .name {
   height: 20px;
@@ -95,3 +100,6 @@ code {
 .wrap {
   display: flex;
 }
+/* .searchButton {
+  height: 20px;
+} */

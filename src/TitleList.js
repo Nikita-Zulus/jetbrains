@@ -2,32 +2,73 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 export default function TitleList({ topLevelIds, pages, anchors, name }) {
+  const [font, setFont] = useState(null);
+  function fontHandle(y) {
+    if (y.target.className === "Anchor" || y.target.className === "anchors") {
+      setFont((prev) => prev);
+    } else {
+      setFont(y.target);
+    }
+    console.log(y.target.className);
+  }
+  let entirePages = [];
+  if (name !== "") {
+    for (let key in pages) {
+      if (pages[key].title === name) {
+        entirePages.push(pages[key]);
+        for (let k in pages) {
+          if (pages[k].id === pages[key].parentId)
+            entirePages.unshift(pages[k]);
+        }
+      }
+    }
+  }
   return (
-    <ul className="TitleList">
-      {topLevelIds
-        .map((id) => pages[id])
-        .filter((x) => (name === "" ? x : x.title === name))
-        .map((page) => (
-          <TitleItem page={page} pages={pages} anchors={anchors} name={name} />
-        ))}
+    <ul className="TitleList" onClick={fontHandle}>
+      {name === ""
+        ? topLevelIds
+            /* .filter((x) => (name === "" ? x : pages[x].title === name)) */
+            .map((id) => pages[id])
+            /*  .filter((x) => (name === "" ? x : x.title === name)) */
+            .map((page) => (
+              <TitleItem
+                page={page}
+                pages={pages}
+                anchors={anchors}
+                name={name}
+                font={font}
+              />
+            ))
+        : entirePages.map((page) => (
+            <TitleItem
+              page={page}
+              pages={pages}
+              anchors={anchors}
+              /*  name={name} */
+              font={font}
+            />
+          ))}
     </ul>
   );
 }
 
-function TitleItem({ page, pages, anchors, name }) {
+function TitleItem({ page, pages, anchors, name, font }) {
   const [collapsed, setCollapsed] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
   const [slectedTarget, setSelectedTarget] = useState(null);
-  const [colored, setColored] = useState(null);
-
+  /* const [colored, setColored] = useState(null); */
+  const [fontCompare, setFontCompare] = useState("");
   function toggleCollapsed(event) {
     if (event.target === slectedTarget) {
       return;
     }
     setCollapsed((prev) => !prev);
   }
-  function handleColor(x) {
+  /* function handleColor(x) {
     setColored(x);
+  } */
+  function handleWeight(x) {
+    setFontCompare(x.target);
   }
   return (
     <Router>
@@ -61,17 +102,20 @@ function TitleItem({ page, pages, anchors, name }) {
             )}
             <Link
               to={page.url}
-              className={
+              /* className={
                 page.id === colored && !collapsed
                   ? "TitleOnlyBold"
                   : "TitleOnly"
-              }
+              } */
+              /* className="TitleOnly" */
+              className={font === fontCompare ? "TitleOnlyBold" : "TitleOnly"}
               style={
                 page.pages === undefined
                   ? { marginLeft: "15.5px" }
                   : { marginLeft: "0px" }
               }
-              onClick={() => handleColor(page.id)}
+              /* onClick={() => handleColor(page.id)} */
+              onClick={handleWeight}
             >
               {page.title}
             </Link>
