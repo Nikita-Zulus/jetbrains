@@ -10,11 +10,11 @@ export default function TitleList({
 }) {
   const [font, setFont] = useState(null);
   function fontHandle(y) {
-    if (y.target.className === "Anchor" || y.target.className === "anchors") {
+    /*  if (y.target.className === "Anchor" || y.target.className === "anchors") {
       setFont((prev) => prev);
-    } else {
-      setFont(y.target);
-    }
+    } else { */
+    setFont(y.target);
+    /* } */
     console.log(y.target.className);
   }
   let entirePages = [];
@@ -77,9 +77,9 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
     setColored(x);
   } */
   function handleWeight(x) {
-    if (x.target.className === "Anchor" || x.target.className === "anchors") {
+    /* if (x.target.className === "Anchor" || x.target.className === "anchors") {
       setFontCompare((prev) => prev);
-    }
+    } */
     setFontCompare(x.target);
   }
   return (
@@ -102,56 +102,57 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
           onMouseOver={() => setSelectedId(page.id)}
           onMouseOut={() => setSelectedId(null)}
         >
-          <div className="TitleList__header">
-            {page.pages && (
-              <div
-                className={
-                  collapsed
-                    ? "TitleList__CheckSqure__Rotate"
-                    : "TitleList__CheckSqure"
-                }
-              ></div>
-            )}
-            <Link
-              to={page.url}
-              /* className={
+          <div className="TitleAndAnchorNested" onClick={handleWeight}>
+            <div className="TitleList__header">
+              {page.pages && (
+                <div
+                  className={
+                    collapsed
+                      ? "TitleList__CheckSqure__Rotate"
+                      : "TitleList__CheckSqure"
+                  }
+                ></div>
+              )}
+              <Link
+                to={page.url}
+                /* className={
                 page.id === colored && !collapsed
                   ? "TitleOnlyBold"
                   : "TitleOnly"
               } */
-              /* className="TitleOnly" */
-              className={
-                font === fontCompare && fontCompare === fontMenu
-                  ? "TitleOnlyBold"
-                  : "TitleOnly"
-              }
-              style={
-                page.pages === undefined
-                  ? { marginLeft: "15.5px" }
-                  : { marginLeft: "0px" }
-              }
-              /* onClick={() => handleColor(page.id)} */
-              onClick={handleWeight}
+                /* className="TitleOnly" */
+                className={
+                  font === fontCompare && fontCompare === fontMenu
+                    ? "TitleOnlyBold"
+                    : "TitleOnly"
+                }
+                style={
+                  page.pages === undefined
+                    ? { marginLeft: "15.5px" }
+                    : { marginLeft: "0px" }
+                }
+                /* onClick={() => handleColor(page.id)} */
+              >
+                {page.title}
+              </Link>
+            </div>
+            <div
+              className="anchors"
+              onMouseOver={(e) => setSelectedTarget(e.target)}
+              onMouseOut={() => setSelectedTarget(null)}
             >
-              {page.title}
-            </Link>
-          </div>
-          <div
-            className="anchors"
-            onMouseOver={(e) => setSelectedTarget(e.target)}
-            onMouseOut={() => setSelectedTarget(null)}
-          >
-            {!collapsed &&
-              page.anchors &&
-              page.anchors.map((anchor) => (
-                <Link
-                  to={anchors[anchor].url + anchors[anchor].anchor}
-                  className="Anchor"
-                  style={{ paddingLeft: "40px" }}
-                >
-                  {anchors[anchor].title}
-                </Link>
-              ))}
+              {!collapsed &&
+                page.anchors &&
+                page.anchors.map((anchor) => (
+                  <Link
+                    to={anchors[anchor].url + anchors[anchor].anchor}
+                    className="Anchor"
+                    style={{ paddingLeft: "40px" }}
+                  >
+                    {anchors[anchor].title}
+                  </Link>
+                ))}
+            </div>
           </div>
         </div>
         {!collapsed && page.pages && (

@@ -17,16 +17,16 @@ function App() {
   // return 123;
   const [name, setName] = useState("");
   const [nameValue, setNameValue] = useState("");
-  function handleSearch() {
+  function handleSearch(e) {
     setName(nameValue);
   }
   const [fontMenu, setFontMenu] = useState("");
   function fontMenuHandle(z) {
-    if (z.target.className === "Anchor" || z.target.className === "anchors") {
+    /* if (z.target.className === "Anchor" || z.target.className === "anchors") {
       setFontMenu((prev) => prev);
-    } else {
-      setFontMenu(z.target);
-    }
+    } else { */
+    setFontMenu(z.target);
+    /*  } */
     console.log(fontMenu);
   }
   return (
