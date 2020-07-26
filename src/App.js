@@ -14,21 +14,13 @@ const {
 /* console.log(topLevelIds, pages); */
 
 function App() {
-  // return 123;
   const [name, setName] = useState("");
-  const [nameValue, setNameValue] = useState("");
-  function handleSearch(e) {
-    setName(nameValue);
-  }
   const [fontMenu, setFontMenu] = useState("");
   function fontMenuHandle(z) {
-    /* if (z.target.className === "Anchor" || z.target.className === "anchors") {
-      setFontMenu((prev) => prev);
-    } else { */
     setFontMenu(z.target);
-    /*  } */
     console.log(fontMenu);
   }
+  console.log("name", name);
   return (
     <div className="wrap">
       <div className="menu" onClick={fontMenuHandle}>
@@ -44,12 +36,9 @@ function App() {
         type="text"
         className="name"
         placeholder="Название элемента"
-        onChange={(e) => setNameValue(e.target.value)}
-        value={nameValue}
+        onChange={(e) => setName(e.target.value)}
+        value={name}
       />
-      <button type="button" className="searchButton" onClick={handleSearch}>
-        Найти
-      </button>
     </div>
   );
 }

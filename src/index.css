@@ -24,6 +24,8 @@ code {
 .TitleList {
   list-style: none;
   padding-left: 0;
+  /*  overflow: hidden;
+  transition: max-height 0.3s ease-in-out; */
 }
 
 .TitleList__CheckSqure {
@@ -99,6 +101,7 @@ code {
 }
 .wrap {
   display: flex;
+  width: 600px;
 }
 .searchButton {
   height: 20px;

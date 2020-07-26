@@ -7,35 +7,38 @@ export default function TitleList({
   anchors,
   name,
   fontMenu,
+  /* collapsed, */
 }) {
   const [font, setFont] = useState(null);
   function fontHandle(y) {
-    /*  if (y.target.className === "Anchor" || y.target.className === "anchors") {
-      setFont((prev) => prev);
-    } else { */
     setFont(y.target);
-    /* } */
     console.log(y.target.className);
   }
   let entirePages = [];
   if (name !== "") {
+    let lowerCase = name.toLowerCase();
     for (let key in pages) {
-      if (pages[key].title === name) {
+      let titleOfPage = pages[key].title.toLowerCase();
+      if (titleOfPage.includes(lowerCase)) {
         entirePages.push(pages[key]);
-        for (let k in pages) {
-          if (pages[k].id === pages[key].parentId)
+        /* for (let k in pages) {
+          if (pages[k].id === pages[key].parentId) {
             entirePages.unshift(pages[k]);
-        }
+          }
+        } */
       }
     }
   }
   return (
-    <ul className="TitleList" onClick={fontHandle}>
+    <ul
+      key={topLevelIds}
+      className="TitleList"
+      onClick={fontHandle}
+      /*  style={{ maxHeight: collapsed ? 0 : 1000 }} */
+    >
       {name === ""
         ? topLevelIds
-            /* .filter((x) => (name === "" ? x : pages[x].title === name)) */
             .map((id) => pages[id])
-            /*  .filter((x) => (name === "" ? x : x.title === name)) */
             .map((page) => (
               <TitleItem
                 page={page}
@@ -44,6 +47,7 @@ export default function TitleList({
                 name={name}
                 font={font}
                 fontMenu={fontMenu}
+                key={page.id}
               />
             ))
         : entirePages.map((page) => (
@@ -51,9 +55,10 @@ export default function TitleList({
               page={page}
               pages={pages}
               anchors={anchors}
-              /*  name={name} */
+              name={name}
               font={font}
               fontMenu={fontMenu}
+              key={page.id}
             />
           ))}
     </ul>
@@ -64,7 +69,6 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
   const [collapsed, setCollapsed] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
   const [slectedTarget, setSelectedTarget] = useState(null);
-  /* const [colored, setColored] = useState(null); */
   const [fontCompare, setFontCompare] = useState("");
   function toggleCollapsed(event) {
     if (event.target === slectedTarget) {
@@ -73,19 +77,14 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
       setCollapsed((prev) => !prev);
     }
   }
-  /* function handleColor(x) {
-    setColored(x);
-  } */
   function handleWeight(x) {
-    /* if (x.target.className === "Anchor" || x.target.className === "anchors") {
-      setFontCompare((prev) => prev);
-    } */
     setFontCompare(x.target);
   }
   return (
-    <Router>
-      <li key={page.id} id={page.id} className="TitleList__item">
+    <Router key={page.id}>
+      <li /* key={page.id} */ id={page.id} className="TitleList__item">
         <div
+          /* key={page.id} */
           className="TitleAndAnchor"
           style={
             page.id === selectedId
@@ -102,10 +101,15 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
           onMouseOver={() => setSelectedId(page.id)}
           onMouseOut={() => setSelectedId(null)}
         >
-          <div className="TitleAndAnchorNested" onClick={handleWeight}>
-            <div className="TitleList__header">
+          <div
+            /* key={page.id} */
+            className="TitleAndAnchorNested"
+            onClick={handleWeight}
+          >
+            <div /* key={page.id} */ className="TitleList__header">
               {page.pages && (
                 <div
+                  /* key={page.id} */
                   className={
                     collapsed
                       ? "TitleList__CheckSqure__Rotate"
@@ -113,45 +117,62 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
                   }
                 ></div>
               )}
-              <Link
-                to={page.url}
-                /* className={
-                page.id === colored && !collapsed
-                  ? "TitleOnlyBold"
-                  : "TitleOnly"
-              } */
-                /* className="TitleOnly" */
-                className={
-                  font === fontCompare && fontCompare === fontMenu
-                    ? "TitleOnlyBold"
-                    : "TitleOnly"
-                }
-                style={
-                  page.pages === undefined
-                    ? { marginLeft: "15.5px" }
-                    : { marginLeft: "0px" }
-                }
-                /* onClick={() => handleColor(page.id)} */
-              >
-                {page.title}
-              </Link>
+              {page.url !== undefined ? (
+                <Link
+                  /* key={page.id} */
+                  to={page.url}
+                  className={
+                    font === fontCompare && fontCompare === fontMenu
+                      ? "TitleOnlyBold"
+                      : "TitleOnly"
+                  }
+                  style={
+                    page.pages === undefined
+                      ? { marginLeft: "15.5px" }
+                      : { marginLeft: "0px" }
+                  }
+                >
+                  {page.title}
+                </Link>
+              ) : (
+                <span
+                  /* key={page.id} */
+                  to={page.url}
+                  className={
+                    font === fontCompare && fontCompare === fontMenu
+                      ? "TitleOnlyBold"
+                      : "TitleOnly"
+                  }
+                  style={
+                    page.pages === undefined
+                      ? { marginLeft: "15.5px" }
+                      : { marginLeft: "0px" }
+                  }
+                >
+                  {page.title}
+                </span>
+              )}
             </div>
             <div
+              /* key={page.id} */
               className="anchors"
               onMouseOver={(e) => setSelectedTarget(e.target)}
               onMouseOut={() => setSelectedTarget(null)}
             >
-              {!collapsed &&
-                page.anchors &&
-                page.anchors.map((anchor) => (
-                  <Link
-                    to={anchors[anchor].url + anchors[anchor].anchor}
-                    className="Anchor"
-                    style={{ paddingLeft: "40px" }}
-                  >
-                    {anchors[anchor].title}
-                  </Link>
-                ))}
+              {
+                /* false && */ !collapsed &&
+                  page.anchors &&
+                  page.anchors.map((anchor) => (
+                    <Link
+                      key={anchors[anchor].id}
+                      to={anchors[anchor].url + anchors[anchor].anchor}
+                      className="Anchor"
+                      style={{ paddingLeft: "40px" }}
+                    >
+                      {anchors[anchor].title}
+                    </Link>
+                  ))
+              }
             </div>
           </div>
         </div>
@@ -163,6 +184,7 @@ function TitleItem({ page, pages, anchors, name, font, fontMenu }) {
             name={name}
             font={font}
             fontMenu={fontMenu}
+            /* collapsed={collapsed} */
           />
         )}
       </li>
